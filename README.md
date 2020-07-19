@@ -43,3 +43,30 @@ MIT
 ## Copyright
 
 Copyright(c) 2015 Cybozu, Inc.
+
+## Docker または docker-compose
+### 1. crontab ファイルを作成
+```cron
+*/5 * * * * java -jar /root/GGsync.jar /root/
+```
+#### GGsync.properties ファイル
+以下のようにする
+```Bash
+# 秘密鍵（サービスアカウントの秘密鍵）の絶対パス
+# 例）C:/GGsync/xxxxxxxxxxxx.p12
+google.oauth.p12key=/root/GGsync-xxxxxxxx.p12
+```
+### 2. Docker build / run
+```Bash
+docker build -t ggsync-cron .
+docker run -d -v $PWD:/root --restart=always --name ggsync-cron-1 ggsync-cron
+```
+### 2. docker-compose
+```Bash
+docker-compose up -d
+```
+### ログの確認
+ログは標準出力しているので `docker logs` から見ることができます
+```Bash
+docker logs -f ggsync-cron-1
+```

@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  postgresql:
+    build:
+      dockerfile: .
+    container_name: ggsync-cron-1
+    volumes:
+      - ./:/root
+    restart: always
